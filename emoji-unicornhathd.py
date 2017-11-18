@@ -6,8 +6,22 @@ import numpy as np
 import httplib
 import json
 
+try:
+    import unicornhathd
+    print("unicorn hat hd detected")
+except ImportError:
+    from unicorn_hat_sim import unicornhathd
+
+print("""Unicorn HAT HD: Emoji
+
+Press Ctrl+C to exit!
+
+""")
+
+unicornhathd.rotation(0)
+
 # Azure API Key
-api_key = [Key 1]
+api_key = '12b537b6467d45ffbe8d743906ff5e9a'
 
 # CV2
 cascade_path = "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml"
@@ -29,28 +43,21 @@ def getEmotion(image, headers):
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
         print(e.message)
 
-def drawEmotion(image, data):
-    font = cv2.FONT_HERSHEY_PLAIN
-    font_size = 1
+def drawEmotion(data):
     data = json.loads(data)
     for face in data:
-        f_rec  =  face['faceRectangle']
-        width  =  f_rec['width']
-        height =  f_rec['height']
-        left   =  f_rec['left']
-        top    =  f_rec['top']
         f_rec  =  face['scores']
         f_rec = sorted(f_rec.items(), key=lambda x:x[1],reverse = True)
-        cv2.rectangle(image, (left,         top), (left + width,       top + height), (130, 130, 130), 3)
-        cv2.rectangle(image, (left + width, top), (left + width + 150, top + 50),     (130, 130, 130), -1)
+        emo = f_rec[0][0]
 
-        for i in range(0, 5):
-            val = round(f_rec[i][1], 3)
-            emo = f_rec[i][0]
-            cv2.rectangle(image, (left + width, top + 10 * i), (left + width + int(val * 150), top + 10 * (i + 1)),
-                (180, 180, 180), -1)
-            cv2.putText(image, emo + " " + str(val), (left + width, top + 10 * (i + 1)),
-                font, font_size, (255,255,255), 1)
+        R = np.load('rgb/' + emo + '_R.npy')
+        G = np.load('rgb/' + emo + '_G.npy')
+        B = np.load('rgb/' + emo + '_B.npy')
+        for x in range(0, 16):
+            for y in range(0, 16):
+                unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
+        unicornhathd.show()
+        time.sleep(3)
 #####
 
 # Create the in-memory stream
@@ -76,7 +83,6 @@ print facerect
 
 if len(facerect) > 0:
     save_file_name = "face_detect.jpg"
-    save_emotion_file_name = "face_emotion.jpg"
 
     cv2.imwrite(save_file_name, image)
 
@@ -88,5 +94,14 @@ if len(facerect) > 0:
     data = getEmotion(image_load, headers)
     print data
 
-    drawEmotion(image, data)
-    cv2.imwrite(save_emotion_file_name, image)
+    drawEmotion(data)
+
+else
+R = np.load('rgb/no-face_R.npy')
+G = np.load('rgb/no-face_G.npy')
+B = np.load('rgb/no-face_B.npy')
+for x in range(0, 16):
+    for y in range(0, 16):
+        unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
+unicornhathd.show()
+time.sleep(3)
