@@ -16,7 +16,7 @@ Press Ctrl+C to exit!
 
 """)
 
-emoji = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise', 'neutral']
+emoji = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise', 'neutral', 'no-face']
 i = 0
 num = len(emoji)
 

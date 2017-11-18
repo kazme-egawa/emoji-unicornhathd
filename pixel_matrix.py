@@ -7,7 +7,7 @@ G = np.zeros([16,16])
 B = np.zeros([16,16])
 
 #画像の読み込み
-im = Image.open("emoji/neutral.png")
+im = Image.open("emoji/no-face.png")
 
 #RGBに変換
 rgb_im = im.convert('RGB')
@@ -28,9 +28,9 @@ for x in range(size[0]):
         G[x][y] = g
         B[x][y] = b
 
-np.save('neutral_R.npy', R)
-np.save('neutral_G.npy', G)
-np.save('neutral_B.npy', B)
+np.save('no-face_R.npy', R)
+np.save('no-face_G.npy', G)
+np.save('no-face_B.npy', B)
 #
 # R2 = np.load('test_R.npy')
 # G2 = np.load('test_G.npy')
