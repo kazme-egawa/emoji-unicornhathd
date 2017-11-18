@@ -49,6 +49,7 @@ def drawEmotion(data):
         f_rec  =  face['scores']
         f_rec = sorted(f_rec.items(), key=lambda x:x[1],reverse = True)
         emo = f_rec[0][0]
+        print emo
 
         R = np.load('rgb/' + emo + '_R.npy')
         G = np.load('rgb/' + emo + '_G.npy')
