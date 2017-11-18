@@ -7,7 +7,7 @@ import httplib
 import json
 
 # Azure API Key
-api_key = [Key 1]
+api_key = '12b537b6467d45ffbe8d743906ff5e9a'
 
 # CV2
 cascade_path = "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml"

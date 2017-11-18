@@ -68,6 +68,7 @@ with picamera.PiCamera() as camera:
     camera.start_preview()
     time.sleep(0.5)
     camera.capture(stream, format='jpeg')
+print('captured!')
 
 # Construct a numpy array from the stream
 data = np.fromstring(stream.getvalue(), dtype=np.uint8)
