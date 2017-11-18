@@ -58,6 +58,7 @@ def drawEmotion(data):
                 unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
         unicornhathd.show()
         time.sleep(3)
+        unicornhathd.off()
 #####
 
 # Create the in-memory stream
@@ -96,12 +97,13 @@ if len(facerect) > 0:
 
     drawEmotion(data)
 
-else
-R = np.load('rgb/no-face_R.npy')
-G = np.load('rgb/no-face_G.npy')
-B = np.load('rgb/no-face_B.npy')
-for x in range(0, 16):
-    for y in range(0, 16):
-        unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
-unicornhathd.show()
-time.sleep(3)
+else:
+    R = np.load('rgb/no-face_R.npy')
+    G = np.load('rgb/no-face_G.npy')
+    B = np.load('rgb/no-face_B.npy')
+    for x in range(0, 16):
+        for y in range(0, 16):
+            unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
+    unicornhathd.show()
+    time.sleep(3)
+    unicornhathd.off()
