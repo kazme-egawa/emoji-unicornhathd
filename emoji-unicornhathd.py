@@ -115,15 +115,15 @@ try:
                     unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
             unicornhathd.show()
 
-        sleep(1)
+        time.sleep(1)
         print "."
-        sleep(1)
+        time.sleep(1)
         print "."
-        sleep(1)
+        time.sleep(1)
         print "."
-        sleep(1)
+        time.sleep(1)
         print "."
-        sleep(1)
+        time.sleep(1)
         print "."
 
 except KeyboardInterrupt:
