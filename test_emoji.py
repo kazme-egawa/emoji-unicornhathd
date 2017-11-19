@@ -60,7 +60,6 @@ unicornhathd.rotation(0)
 
 try:
     while True:
-        print i
         R = np.load('rgb/' + emoji[i] + '_R.npy')
         G = np.load('rgb/' + emoji[i] + '_G.npy')
         B = np.load('rgb/' + emoji[i] + '_B.npy')
@@ -83,6 +82,7 @@ try:
             else:
                 i += 1
         else:
+            unicornhathd.off()
             sys.exit()
 
 except KeyboardInterrupt:
