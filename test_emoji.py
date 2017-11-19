@@ -47,7 +47,8 @@ class _GetchWindows:
 
 print("""Unicorn HAT HD: Emoji
 
-Press Ctrl+C to exit!
+Press 'a' and 'd' to change emoji!
+to exit, press other key.
 
 """)
 
