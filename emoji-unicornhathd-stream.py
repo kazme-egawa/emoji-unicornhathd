@@ -35,7 +35,7 @@ def getEmotion(image, headers):
     try:
         conn = httplib.HTTPSConnection('api.projectoxford.ai')
         conn.request("POST", "/emotion/v1.0/recognize?", image, headers)
-        response = conn.getresponse()
+        response = conn.getresponse()]
         data = response.read()
         conn.close()
         return data
@@ -57,10 +57,11 @@ def drawEmotion(data):
             for y in range(0, 16):
                 unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
         unicornhathd.show()
-        time.sleep(3)
-        unicornhathd.off()
 #####
 
+
+try:
+    while True:
         # Create the in-memory stream
         stream = io.BytesIO()
         with picamera.PiCamera() as camera:
@@ -104,5 +105,17 @@ def drawEmotion(data):
                 for y in range(0, 16):
                     unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
             unicornhathd.show()
-            time.sleep(3)
-            unicornhathd.off()
+
+        time.sleep(1)
+        print "."
+        time.sleep(1)
+        print "."
+        time.sleep(1)
+        print "."
+        time.sleep(1)
+        print "."
+        time.sleep(1)
+        print "."
+
+except KeyboardInterrupt:
+    unicornhathd.off()
