@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-
+import os
 import numpy as np
 import time
+import pygame
+from pygame.locals import *
 
 try:
     import unicornhathd
@@ -16,7 +18,8 @@ Press Ctrl+C to exit!
 
 """)
 
-emoji = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise', 'neutral', 'no-face']
+emoji = os.listdir('emoji_256/')
+emoji = [x.replace('_256.png', '') for x in emoji]
 i = 0
 num = len(emoji)
 
@@ -31,11 +34,19 @@ try:
             for y in range(0, 16):
                 unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
         unicornhathd.show()
-        if i == num - 1:
-            i = 0
-        else:
-            i += 1
-        time.sleep(1)
+
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_LEFT:
+                    if i == 0:
+                        i = num -1
+                    else:
+                        i -= 1
+                if event.key == K_RIGHT:
+                    if i == num - 1:
+                        i = 0
+                    else:
+                        i += 1
 
 except KeyboardInterrupt:
     unicornhathd.off()

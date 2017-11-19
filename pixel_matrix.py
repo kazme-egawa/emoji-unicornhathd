@@ -1,16 +1,24 @@
 #coding:utf-8
+import sys
 import numpy as np
 from PIL import Image
+
+args = sys.argv
 
 R = np.zeros([16,16])
 G = np.zeros([16,16])
 B = np.zeros([16,16])
 
 #画像の読み込み
-im = Image.open("emoji/no-face.png")
+im = Image.open('emoji/' + args[1] + '.png')
 
 #RGBに変換
 rgb_im = im.convert('RGB')
+
+#画像をリサイズ
+# rgb_im = rgb_im.resize((16, 16))
+rgb_im = rgb_im.resize((16, 16), Image.LANCZOS)
+rgb_im.save(('emoji_256/' + args[1] + '_256.png'))
 
 #画像サイズを取得
 size = rgb_im.size
@@ -28,9 +36,9 @@ for x in range(size[0]):
         G[x][y] = g
         B[x][y] = b
 
-np.save('no-face_R.npy', R)
-np.save('no-face_G.npy', G)
-np.save('no-face_B.npy', B)
+np.save('rgb/' + args[1] + '_R.npy', R)
+np.save('rgb/' + args[1] + '_G.npy', G)
+np.save('rgb/' + args[1] + '_B.npy', B)
 #
 # R2 = np.load('test_R.npy')
 # G2 = np.load('test_G.npy')
