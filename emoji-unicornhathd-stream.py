@@ -35,7 +35,7 @@ def getEmotion(image, headers):
     try:
         conn = httplib.HTTPSConnection('api.projectoxford.ai')
         conn.request("POST", "/emotion/v1.0/recognize?", image, headers)
-        response = conn.getresponse()]
+        response = conn.getresponse()
         data = response.read()
         conn.close()
         return data
