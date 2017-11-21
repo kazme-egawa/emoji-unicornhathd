@@ -15,10 +15,10 @@ im = Image.open('emoji/' + args[1] + '.png')
 #RGBに変換
 rgb_im = im.convert('RGB')
 
-#画像をリサイズ
-# rgb_im = rgb_im.resize((16, 16))
+#画像をリサイズ・左右反転
 rgb_im = rgb_im.resize((16, 16), Image.LANCZOS)
 rgb_im.save(('emoji_256/' + args[1] + '_256.png'))
+rgb_im = rgb_im.transpose(Image.FLIP_LEFT_RIGHT)
 
 #画像サイズを取得
 size = rgb_im.size
