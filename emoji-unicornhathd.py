@@ -72,18 +72,20 @@ with picamera.PiCamera() as camera:
     camera.capture(stream, format='jpeg')
 print "captured!"
 emoji_show('camera-with-flash')
+time.sleep(0.5)
+emoji_show('camera')
 
 # Construct a numpy array from the stream
 data = np.fromstring(stream.getvalue(), dtype=np.uint8)
 # "Decode" the image from the array, preserving colour
 image = cv2.imdecode(data, 1)
 
-emoji_show('hourglass')
-
 # Detect face
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cascade = cv2.CascadeClassifier(cascade_path)
 facerect = cascade.detectMultiScale(image_gray, scaleFactor=1.1, minNeighbors=1, minSize=(1, 1))
+
+emoji_show('hourglass')
 
 print "face rectangle"
 print facerect
