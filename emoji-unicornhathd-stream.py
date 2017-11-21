@@ -66,6 +66,7 @@ def drawEmotion(data):
 try:
     while True:
         # Create the in-memory stream
+        stream = io.BytesIO()
         emoji_show('camera')
         with picamera.PiCamera() as camera:
             camera.resolution = (camera_width, camera_height)
