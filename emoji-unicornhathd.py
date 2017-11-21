@@ -31,6 +31,15 @@ camera_width = 640
 camera_height = 480
 
 #####
+def unicornhathd(emoji):
+    R = np.load('rgb/' + emoji + '_R.npy')
+    G = np.load('rgb/' + emoji + '_G.npy')
+    B = np.load('rgb/' + emoji + '_B.npy')
+    for x in range(0, 16):
+        for y in range(0, 16):
+            unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
+    unicornhathd.show()
+
 def getEmotion(image, headers):
     try:
         conn = httplib.HTTPSConnection('api.projectoxford.ai')
@@ -50,28 +59,26 @@ def drawEmotion(data):
         f_rec = sorted(f_rec.items(), key=lambda x:x[1],reverse = True)
         emo = f_rec[0][0]
 
-        R = np.load('rgb/' + emo + '_R.npy')
-        G = np.load('rgb/' + emo + '_G.npy')
-        B = np.load('rgb/' + emo + '_B.npy')
-        for x in range(0, 16):
-            for y in range(0, 16):
-                unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
-        unicornhathd.show()
+        unicornhathd(emo)
         time.sleep(3)
         unicornhathd.off()
 #####
 
         # Create the in-memory stream
         stream = io.BytesIO()
+        unicornhathd('camera')
         with picamera.PiCamera() as camera:
             camera.resolution = (camera_width, camera_height)
             camera.capture(stream, format='jpeg')
         print "captured!"
+        unicornhathd('camera-with-flash')
 
         # Construct a numpy array from the stream
         data = np.fromstring(stream.getvalue(), dtype=np.uint8)
         # "Decode" the image from the array, preserving colour
         image = cv2.imdecode(data, 1)
+
+        unicornhathd('hourglass')
 
         # Detect face
         image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
