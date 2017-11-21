@@ -64,52 +64,46 @@ def drawEmotion(data):
         unicornhathd.off()
 #####
 
-        # Create the in-memory stream
-        stream = io.BytesIO()
-        unicornhathd('camera')
-        with picamera.PiCamera() as camera:
-            camera.resolution = (camera_width, camera_height)
-            camera.capture(stream, format='jpeg')
-        print "captured!"
-        unicornhathd('camera-with-flash')
+# Create the in-memory stream
+stream = io.BytesIO()
+unicornhathd('camera')
+with picamera.PiCamera() as camera:
+    camera.resolution = (camera_width, camera_height)
+    camera.capture(stream, format='jpeg')
+print "captured!"
+unicornhathd('camera-with-flash')
 
-        # Construct a numpy array from the stream
-        data = np.fromstring(stream.getvalue(), dtype=np.uint8)
-        # "Decode" the image from the array, preserving colour
-        image = cv2.imdecode(data, 1)
+# Construct a numpy array from the stream
+data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+# "Decode" the image from the array, preserving colour
+image = cv2.imdecode(data, 1)
 
-        unicornhathd('hourglass')
+unicornhathd('hourglass')
 
-        # Detect face
-        image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        cascade = cv2.CascadeClassifier(cascade_path)
-        facerect = cascade.detectMultiScale(image_gray, scaleFactor=1.1, minNeighbors=1, minSize=(1, 1))
+# Detect face
+image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cascade = cv2.CascadeClassifier(cascade_path)
+facerect = cascade.detectMultiScale(image_gray, scaleFactor=1.1, minNeighbors=1, minSize=(1, 1))
 
-        print "face rectangle"
-        print facerect
+print "face rectangle"
+print facerect
 
-        if len(facerect) > 0:
-            save_file_name = "face_detect.jpg"
+if len(facerect) > 0:
+    save_file_name = "face_detect.jpg"
 
-            cv2.imwrite(save_file_name, image)
+    cv2.imwrite(save_file_name, image)
 
-            headers = {
-                'Content-Type': 'application/octet-stream',
-                'Ocp-Apim-Subscription-Key': api_key,
-            }
-            image_load = open(save_file_name, 'rb')
-            data = getEmotion(image_load, headers)
-            print data
+    headers = {
+        'Content-Type': 'application/octet-stream',
+        'Ocp-Apim-Subscription-Key': api_key,
+    }
+    image_load = open(save_file_name, 'rb')
+    data = getEmotion(image_load, headers)
+    print data
 
-            drawEmotion(data)
+    drawEmotion(data)
 
-        else:
-            R = np.load('rgb/no-face_R.npy')
-            G = np.load('rgb/no-face_G.npy')
-            B = np.load('rgb/no-face_B.npy')
-            for x in range(0, 16):
-                for y in range(0, 16):
-                    unicornhathd.set_pixel(x, y, R[x][y], G[x][y], B[x][y])
-            unicornhathd.show()
-            time.sleep(3)
-            unicornhathd.off()
+else:
+    unicornhathd('no-face')
+    time.sleep(3)
+    unicornhathd.off()
