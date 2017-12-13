@@ -21,6 +21,7 @@ Press Ctrl+C to exit!
 unicornhathd.rotation(0)
 
 # Azure API Key
+# ここを変更してください！
 api_key = 'キー１'
 
 # CV2
